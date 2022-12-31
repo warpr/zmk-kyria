@@ -1,30 +1,106 @@
 /*
- * Copyright (c) 2020 The ZMK Contributors
+ * Copyright (c) 2022 Kuno Woudt
  *
  * SPDX-License-Identifier: MIT
  */
 
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/outputs.h>
+
+#define DEFAULT 0
+#define LOWER   1
+#define RAISE   2
+#define ADJUST  3
+
+#define KW_FRSH    LG(LS(R))           // browser refresh
+#define KW_DEVT    LG(LA(I))           // browser dev tools
+#define KW_EMOJ    LG(LC(SPACE))       // macos emoji picker
+#define KW_MOOM    LG(LC(M))           // moom window management
+#define KW_WINF    LG(GRAVE)           // cmd+` (macos, next window of current app)
+#define KW_WINB    LG(TILDE)           // cmd+~ (macos, prev window of current app)
+
+#define WORD_L     LA(LEFT)            // alt+left (word left, macos/emacs)
+#define WORD_R     LA(RIGHT)           // alt+right (word right, macos/emacs)
+
+#define KW_SCR3    LG(LS(N3))          // screenshot (macos)
+#define KW_SCR4    LG(LS(N4))          // screenshot (region, macos)
+#define KW_SCR5    LG(LS(N5))          // screenshot (window/etc..., macos)
+
+#define KW_UNDO    LC(Z)               // cmd+z  undo
+#define KW_CUT     LC(X)               // cmd+x  cut
+#define KW_COPY    LC(C)               // cmd+c  copy
+#define KW_PASTE   LC(V)               // cmd+v  paste
+
+// Using layer taps on thumbs, having quick tap as well helps w/ repeating space/backspace
+// &lt { quick_tap_ms = <200>; };
 
 / {
-	keymap {
-		compatible = "zmk,keymap";
+    macros {
+        ZMK_MACRO(esc_bslash,
+            wait-ms = <40>;
+            tap-ms = <40>;
+            bindings = <&kp ESC>, <&kp BACKSLASH>;
+        )
+    };
 
-		default_layer {
-// ---------------------------------------------------------------------------------------------------------------------------------
-// |  ESC  |  Q  |  W  |  E   |  R   |  T   |                                          |  Y   |  U    |  I    |  O   |   P   |   \  |
-// |  TAB  |  A  |  S  |  D   |  F   |  G   |                                          |  H   |  J    |  K    |  L   |   ;   |   '  |
-// | SHIFT |  Z  |  X  |  C   |  V   |  B   | L SHIFT | L SHIFT |  | L SHIFT | L SHIFT |  N   |  M    |  ,    |  .   |   /   | CTRL |
-//                     | GUI  | DEL  | RET  |  SPACE  |   ESC   |  |   RET   |  SPACE  | TAB  | BSPC  | R-ALT |
-			bindings = <
-	&kp ESC   &kp Q &kp W &kp E &kp R &kp T                                                &kp Y &kp U  &kp I     &kp O   &kp P    &kp BSLH
-	&kp TAB   &kp A &kp S &kp D &kp F &kp G                                                &kp H &kp J  &kp K     &kp L   &kp SEMI &kp SQT
-	&kp LSHFT &kp Z &kp X &kp C &kp V &kp B &kp LSHFT &kp LSHFT        &kp LSHFT &kp LSHFT &kp N &kp M  &kp COMMA &kp DOT &kp FSLH &kp RCTRL
-	                 &kp LGUI &kp DEL &kp RET &kp SPACE &kp ESC        &kp RET  &kp SPACE  &kp TAB &kp BSPC &kp RALT
-			>;
+    keymap {
+        compatible = "zmk,keymap";
 
-			sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
-		};
-	};
+        default_layer {
+            label = "Base";
+            bindings = <
+            // ╭──────────┬──────────┬──────────┬──────────┬──────────┬──────────╮                                                 ╭──────────┬──────────┬──────────┬─────────┬──────────┬───────────╮
+                &kp TAB    &kp APOS   &kp COMMA  &kp DOT    &kp P      &kp Y                                                        &kp F      &kp G      &kp C      &kp R     &kp L      &kp ESC
+                &kp LCTRL  &kp A      &kp O      &kp E      &kp U      &kp I                                                        &kp D      &kp H      &kp T      &kp N     &kp S      &kp MINUS
+           &mt LSHFT LPAR  &kp SEMI   &kp Q      &kp J      &kp K      &kp X   &kp KW_FRSH  &kp KW_EMOJ   &kp KW_MOOM  &kp KW_DEVT  &kp B      &kp M      &kp W      &kp V     &kp Z      &mt RSHFT RPAR
+            // ╰──────────┴──────────┴───────┬──┴──────────┴──────────┴───────╮                                                   ╭─────────┬────────────┴──────────┴─────────┴──────────┴───────────╯
+                                              &kp C_PP  &kp KW_WINB  &kp LCMD  &lt LOWER SPACE  &kp DEL   &kp BSPC  &lt RAISE RET  &kp RALT  &kp KW_WINF  &trans
+            //                               ╰─────────┴────────────┴─────────┴────────────────┴───────╯ ╰─────────┴──────────────┴─────────┴────────────┴──────╯
+            >;
+
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
+        };
+
+        lower_layer {
+            label = "Lower";
+            bindings = <
+            // ╭──────────┬──────────┬──────────┬──────────┬──────────┬──────────╮                                                 ╭──────────┬──────────┬──────────┬─────────┬──────────┬───────────╮
+                &trans     &kp PG_UP  &kp WORD_L  &kp UP     &kp WORD_R &kp HOME                                                    &kp KW_SCR3  &kp N7   &kp N8     &kp N9    &none      &esc_bslash
+                &trans     &kp PG_DN  &kp LEFT    &kp DOWN   &kp RIGHT  &kp END                                                     &kp KW_SCR4  &kp N4   &kp N5     &kp N6    &none      &trans
+                &trans     &kp KW_CUT &kp KW_COPY &kp KW_PASTE  &none   &none      &trans      &trans        &trans       &trans    &kp KW_SCR5  &kp N1   &kp N2     &kp N3    &kp KW_UNDO &trans
+            // ╰──────────┴──────────┴───────┬──┴──────────┴──────────┴───────╮                                                   ╭─────────┬────────────┴──────────┴─────────┴──────────┴───────────╯
+                                               &trans    &trans       &trans    &trans          &trans    &trans     &kp N0        &trans    &trans       &trans
+            //                               ╰─────────┴────────────┴─────────┴────────────────┴───────╯ ╰─────────┴──────────────┴─────────┴────────────┴──────╯
+            >;
+        };
+
+        raise_layer {
+            label = "Raise";
+            bindings = <
+            // ╭──────────┬──────────┬──────────┬──────────┬──────────┬──────────╮                                                 ╭──────────┬──────────┬──────────┬─────────┬──────────┬───────────╮
+                &trans     &kp EXCL   &kp AT     &kp HASH   &kp PRCNT  &none                                                        &none      &kp AMPS   &kp STAR   &kp PLUS  &none      &trans
+                &kp LBRC   &kp CARET  &kp GRAVE  &kp TILDE  &kp DLLR   &trans                                                       &kp QMARK  &kp SLASH  &kp EQUAL  &kp BSLH  &kp PIPE   &kp RBRC
+                &kp LBKT   &none      &none      &none      &none      &none      &none      &none         &none        &none       &none      &none      &none      &none     &none      &kp RBKT
+            // ╰──────────┴──────────┴───────┬──┴──────────┴──────────┴───────╮                                                   ╭─────────┬────────────┴──────────┴─────────┴──────────┴───────────╯
+                                               &trans    &trans       &trans    &mo ADJUST      &trans     &trans   &trans          &trans    &trans      &trans
+            //                               ╰─────────┴────────────┴─────────┴────────────────┴───────╯ ╰─────────┴──────────────┴─────────┴────────────┴──────╯
+            >;
+        };
+
+        adjust_layer {
+            label = "Adjust";
+            bindings = <
+            // ╭──────────┬──────────┬──────────┬──────────┬──────────┬──────────╮                                      ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────┬────────────╮
+                 &trans     &kp F1     &kp F2     &kp F3     &kp F4     &trans                                            &kp INS        &kp PSCRN      &kp SLCK       &kp PAUSE_BREAK  &trans       &bt BT_CLR
+                 &trans     &kp F5     &kp F6     &kp F7     &kp F8     &trans                                            &trans         &trans         &trans         &trans         &trans         &trans
+                 &trans     &kp F9     &kp F10    &kp F11    &kp F12    &trans     &trans   &trans     &trans   &trans    &bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2   &bt BT_SEL 3   &bt BT_SEL 4   &trans
+            // ╰──────────┴──────────┴──────────┴─────┬────┴──────────┴──────────╮                                     ╭─────────┬─────┴──────────────┴──────────────┴──────────────┴──────────────┴────────────╯
+                                                        &trans   &trans   &trans   &trans   &trans     &trans   &trans   &trans    &trans      &trans
+            //                                        ╰────────┴────────┴────────┴────────┴────────╯ ╰────────┴────────┴─────────┴────────────┴──────╯
+            >;
+        };
+
+    };
 };
