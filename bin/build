@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cd ~/code/zmk/app
+west build --pristine -b nice_nano_v2 -- -DSHIELD="kyria_rev2_right" -DZMK_CONFIG=/home/kuno/code/zmk-kyria
+
