@@ -56,11 +56,11 @@
                 &kp LCTRL  &kp A      &kp O      &kp E      &kp U      &kp I                                                        &kp D      &kp H      &kp T      &kp N     &kp S      &kp MINUS
            &mt LSHFT LPAR  &kp SEMI   &kp Q      &kp J      &kp K      &kp X   &kp KW_FRSH  &kp KW_EMOJ   &kp KW_MOOM  &kp KW_DEVT  &kp B      &kp M      &kp W      &kp V     &kp Z      &mt RSHFT RPAR
             // ╰──────────┴──────────┴───────┬──┴──────────┴──────────┴───────╮                                                   ╭─────────┬────────────┴──────────┴─────────┴──────────┴───────────╯
-                                              &kp C_PP  &kp KW_WINB  &kp LCMD  &lt LOWER SPACE  &kp DEL   &kp BSPC  &lt RAISE RET  &kp RALT  &kp KW_WINF  &trans
+                                              &none     &kp KW_WINB  &kp LCMD  &lt LOWER SPACE  &kp DEL   &kp BSPC  &lt RAISE RET  &kp RALT  &kp KW_WINF  &none
             //                               ╰─────────┴────────────┴─────────┴────────────────┴───────╯ ╰─────────┴──────────────┴─────────┴────────────┴──────╯
             >;
 
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
+            sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_DN PG_UP>;
         };
 
         lower_layer {
@@ -81,8 +81,8 @@
             bindings = <
             // ╭──────────┬──────────┬──────────┬──────────┬──────────┬──────────╮                                                 ╭──────────┬──────────┬──────────┬─────────┬──────────┬───────────╮
                 &trans     &kp EXCL   &kp AT     &kp HASH   &kp PRCNT  &none                                                        &none      &kp AMPS   &kp STAR   &kp PLUS  &none      &trans
-                &kp LBRC   &kp CARET  &kp GRAVE  &kp TILDE  &kp DLLR   &trans                                                       &kp QMARK  &kp SLASH  &kp EQUAL  &kp BSLH  &kp PIPE   &kp RBRC
-                &kp LBKT   &none      &none      &none      &none      &none      &none      &none         &none        &none       &none      &none      &none      &none     &none      &kp RBKT
+                &kp LBRC   &kp CARET  &kp GRAVE  &kp TILDE  &kp DLLR   &none                                                        &kp QMARK  &kp SLASH  &kp EQUAL  &kp BSLH  &kp PIPE   &kp RBRC
+                &kp LBKT   &none      &C_PREV    &C_PAUSE   &C_PLAY    &C_NEXT    &none      &none         &none        &none       &none      &none      &none      &none     &none      &kp RBKT
             // ╰──────────┴──────────┴───────┬──┴──────────┴──────────┴───────╮                                                   ╭─────────┬────────────┴──────────┴─────────┴──────────┴───────────╯
                                                &trans    &trans       &trans    &mo ADJUST      &trans     &trans   &trans          &trans    &trans      &trans
             //                               ╰─────────┴────────────┴─────────┴────────────────┴───────╯ ╰─────────┴──────────────┴─────────┴────────────┴──────╯
