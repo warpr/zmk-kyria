@@ -82,7 +82,7 @@
             // ╭──────────┬──────────┬──────────┬──────────┬──────────┬──────────╮                                                 ╭──────────┬──────────┬──────────┬─────────┬──────────┬───────────╮
                 &trans     &kp EXCL   &kp AT     &kp HASH   &kp PRCNT  &none                                                        &none      &kp AMPS   &kp STAR   &kp PLUS  &none      &trans
                 &kp LBRC   &kp CARET  &kp GRAVE  &kp TILDE  &kp DLLR   &none                                                        &kp QMARK  &kp SLASH  &kp EQUAL  &kp BSLH  &kp PIPE   &kp RBRC
-                &kp LBKT   &none      &C_PREV    &C_PAUSE   &C_PLAY    &C_NEXT    &none      &none         &none        &none       &none      &none      &none      &none     &none      &kp RBKT
+                &kp LBKT   &none      &kp C_PREV  &kp C_PAUSE  &kp C_PLAY  &kp C_NEXT   &none   &none      &none        &none       &none      &none      &none      &none     &none      &kp RBKT
             // ╰──────────┴──────────┴───────┬──┴──────────┴──────────┴───────╮                                                   ╭─────────┬────────────┴──────────┴─────────┴──────────┴───────────╯
                                                &trans    &trans       &trans    &mo ADJUST      &trans     &trans   &trans          &trans    &trans      &trans
             //                               ╰─────────┴────────────┴─────────┴────────────────┴───────╯ ╰─────────┴──────────────┴─────────┴────────────┴──────╯
